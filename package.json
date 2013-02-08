@@ -1,0 +1,22 @@
+{
+  "name": "jstype",
+  "version": "0.0.1",
+  "description": "Extended and extensible javascript type checking",
+  "main": "jstype.js",
+  "scripts": {
+    "test": "node ./test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fshost/jstype"
+  },
+  "keywords": [
+    "javascript",
+    "type",
+    "types",
+    "typeof",
+    "type-checking"
+  ],
+  "author": "Nathan Cartwright",
+  "license": "MIT"
+}
