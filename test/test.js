@@ -1,6 +1,7 @@
 ﻿"use strict";
 
-var test = require('tap').test,
+var path = require('path'),
+    test = require('tap').test,
     jsType = require('..');
 
 test("jsType module", function (test) {
