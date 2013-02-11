@@ -1,6 +1,6 @@
 {
   "name": "jstype",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Extended and extensible javascript type checking",
   "main": "jstype.js",
   "scripts": {
