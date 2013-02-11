@@ -7,10 +7,33 @@
 
         define('JsType', function (exports) {
 
+
+            /******************************************************************************
+            * Type [object]
+            * 
+            * an enumeration of native Object Class constructors mapped to their string
+            * equivalents, e.g. Object => 'object', String => 'string', etc. used
+            * internally but exposed for general usefulness in specifying types
+            *
+            * usage example:
+            *     var stringType = Type[String];
+            *
+            ***********************************/
+            var Type = exports.Type = {};
+            Type[Object] = 'object';
+            Type[String] = 'string';
+            Type[Array] = 'array';
+            Type[Date] = 'date';
+            Type[Number] = 'number';
+            Type[RegExp] = 'regexp';
+            Type[Function] = 'function';
+            Type[Boolean] = 'boolean';
+
+
             var customTypes = [];
             var customConstructors = [];
             var reservedTypes = [
-                "undefined"
+              "undefined"
             , "null"
             , "infinity"
             , "nan"
@@ -23,6 +46,7 @@
             , "function"
             , "boolean"
             , "object"
+            , "arguments"
             ];
 
             /******************************************************************************
