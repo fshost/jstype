@@ -1,6 +1,6 @@
 {
   "name": "jstype",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Extended and extensible javascript type checking",
   "main": "jstype.js",
   "scripts": {
@@ -17,6 +17,9 @@
     "typeof",
     "type-checking"
   ],
-  "author": "Nathan Cartwright",
-  "license": "MIT"
+  "author": {
+    "name": "Nathan Cartwright"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md"
 }

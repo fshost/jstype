@@ -1,4 +1,4 @@
-﻿(function (root, name) {
+﻿(function(root, name) {
     var node = typeof exports === 'object',
         mod = node ? module : {
             exports: {}
@@ -6,40 +6,16 @@
     factory(mod, mod.exports);
     if (typeof define === 'function' && define.amd) {
         define(name, module.exports);
-    }
-    else if (!node) {
+    } else if (!node) {
         root[name] = mod.exports;
     }
 
     function factory(module, exports) {
-        /******************************************************************************
-         * Type [object]
-         *
-         * an enumeration of native Object Class constructors mapped to their string
-         * equivalents, e.g. Object => 'object', String => 'string', etc. used
-         * internally but exposed for general usefulness in specifying types
-         *
-         * usage example:
-         *     var stringType = Type[String];
-         *
-         ***********************************/
-        var Type = exports.Type = {};
-        Type[Object] = 'object';
-        Type[String] = 'string';
-        Type[Array] = 'array';
-        Type[Date] = 'date';
-        Type[Number] = 'number';
-        Type[RegExp] = 'regexp';
-        Type[Function] = 'function';
-        Type[Boolean] = 'boolean';
-
         var customTypes = [];
         var customConstructors = [];
-        var reservedTypes = ["undefined", "null", "infinity", "nan", "date", "regexp", "array", "integer", "float", "string", "function", "boolean", "object", "arguments"];
-
+        var reservedTypes = ["number", "undefined", "null", "infinity", "nan", "date", "regexp", "array", "integer", "float", "string", "function", "boolean", "object", "arguments"];
+        var extendedTypes = ["nan", "infinity", "integer", "float"];
         /******************************************************************************
-         * type [function]
-         *
          * a function that returns the type of an object similarly to 'typeof' but with
          * the extended type differentiation proposed for EcmaScript 6 (Harmony). This
          * method relies on the value returned by Object.prototype.toString, converted
@@ -69,13 +45,10 @@
          * must be specified as true.  A third argument may be specified in the case of
          * desiring to check against custom types but not extended numeric types.
          *
-         * arguments:
-         *      value - [any] JavaScript value to get the type of
-         *      extended - [boolean] whether to distinguish between numeric values, and/or
-         *                           custom defined types
-         *      numericBase - [boolean] if extended is true, specifies whether to return
-         *                              extended numeric types
-         * returns: [string] of one of one of the following types
+         * @param value any type of JavaScript value to get the type of
+         * @param {Boolean} extended whether to distinguish between numeric values and custom defined types
+         * @param {Boolean} numericBase if extended is true, specifies whether to return extended numeric types
+         * @returns {String} of one of one of the following types
          *      - undefined
          *      - null
          *      - infinity
@@ -90,17 +63,17 @@
          *      - boolean
          *      - object
          *
-         * usage example:
-         *     var obj = { foo: 'bar' },
-         *         objType = type(obj); // 'object'
-         *      type(7.1, true); // 'float'
-         *      function MyClass() { }
-         *      defineType('myclass', MyClass);
-         *      var instance = new MyClass();
-         *      type(instance); // 'myclass'
-         ***********************************/
+         * @example
+         * var type = jsType.type;
+         * type({ foo: 'bar' }); // 'object'
+         * type(7.1, true); // 'float'
+         * function MyClass() { }
+         * defineType('myclass', MyClass);
+         * var instance = new MyClass();
+         * type(instance); // 'myclass'
+         */
 
-        exports.type = function type(value, extended, baseNumeric) {
+        function type(value, extended, baseNumeric) {
             if (value === 'undefined') return 'undefined';
             if (value === null) return 'null';
             if (extended) {
@@ -122,16 +95,15 @@
             var oclass = Object.prototype.toString.call(value).split(' ')[1];
             return oclass.substr(0, oclass.length - 1).toLowerCase();
         }
+        exports.type = type;
 
-        /****
-         * defineType
-         *
-         * arguments:
-         *  type [ string ] - named type for the constructor instances
-         *  constructor [ function ] - an object constructor
-         *
-         ***/
-        exports.define = function define(typeName, constructor) {
+        /**
+         * define a custom type
+         * @param {String} type named type for the constructor instances
+         * @param {Function} constructor an object constructor
+         */
+
+        function define(typeName, constructor) {
             if (typeof typeName === 'function') {
                 constructor = typeName;
                 typeName = constructor.name || constructor;
@@ -140,7 +112,30 @@
                 throw new Error('"' + typeName + '" is already defined as a type');
             }
             customTypes.push(typeName);
+            extendedTypes.push(typeName);
             customConstructors.push(constructor);
-        };
+            var methodName = 'is' + typeName.charAt(0).toUpperCase() + typeName.substr(1);
+            exports[methodName] = getMethod(typeName);
+        }
+        exports.define = define;
+
+        function getMethod(curType) {
+            if (extendedTypes.indexOf(curType) === -1) {
+                return function(value) {
+                    return type(value) === curType;
+                };
+            } else {
+                return function (value) {
+                    return type(value, true) === curType;
+                };
+            }
+        }
+
+        for (var i = 0, l = reservedTypes.length; i < l; i++) {
+            var curType = reservedTypes[i];
+            var methodName = 'is' + curType.charAt(0).toUpperCase() + curType.substr(1);
+            exports[methodName] = getMethod(curType);
+        }
+
     }
 })(this, 'jsType');

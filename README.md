@@ -4,15 +4,16 @@ JsType
 JavaScript explicit type checking that can be extended with custom types
 
 
-### installation (Node.js)
+### installation
+
     npm install jstype
 
-    or load it in the browser with a script tag, or as an AMD module
+jstype can also be used in the browser either by loading it via a script tag or as an AMD module.
 
 
 ### methods
 
-#####jsType.type
+#####type
 
 ######usage:
 
@@ -53,8 +54,20 @@ Examples:
     type(NaN, true);       // 'nan'
 
 
+##### is[Type]
 
-#####jsType.define
+###### usage:
+
+    jsType.is{Type}(value)
+
+Examples:
+
+    jsType.isNumber(27); // true
+    jsType.isInteger(27); // true
+    jsType.isString('foo'); // true
+    jsType.isString(27); // false
+
+#####define
 
 ######usage:
 
@@ -75,9 +88,9 @@ Examples:
     type(new MyClass());      // 'MyClass'
 
 ### License
-MIT License
+MIT-Style License
 
-Copyright (c) 2013 Mashdraggin
+Copyright (c) 2013 Nathan Cartwright
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

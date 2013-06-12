@@ -5,19 +5,6 @@ var path = require('path'),
     jsType = require('..');
 
 test("jsType module", function (test) {
-    var Type = jsType.Type;
-    test.test("Type", function (test) {
-        test.ok(jsType.Type);
-        test.equal(jsType.Type[Object], 'object');
-        test.equal(jsType.Type[Array], 'array');
-        test.equal(jsType.Type[Date], 'date');
-        test.equal(jsType.Type[Function], 'function');
-        test.equal(jsType.Type[RegExp], 'regexp');
-        test.equal(jsType.Type[Boolean], 'boolean');
-        test.equal(jsType.Type[String], 'string');
-        test.equal(jsType.Type[Number], 'number');
-        test.end();
-    });
 
     test.test("type", function (test) {
         var type = jsType.type;
