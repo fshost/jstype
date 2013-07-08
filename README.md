@@ -32,7 +32,7 @@ Extended numeric type differentiation is optionally available by passing a secon
 
 Examples:
 
-	var type = require('jstype'),
+	var jsType = require('jstype'),
 		type = jsType.type;
 
     // primitives return same values as typeof
