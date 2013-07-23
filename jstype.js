@@ -1,4 +1,4 @@
-﻿(function(root, name) {
+(function(root, name) {
     var node = typeof exports === 'object',
         mod = node ? module : {
             exports: {}
@@ -72,7 +72,6 @@
          * var instance = new MyClass();
          * type(instance); // 'myclass'
          */
-
         function type(value, extended, baseNumeric) {
             if (value === 'undefined') return 'undefined';
             if (value === null) return 'null';
